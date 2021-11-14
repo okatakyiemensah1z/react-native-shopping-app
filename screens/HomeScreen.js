@@ -1,106 +1,149 @@
+import React from 'react';
+import {
+  View,
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+  TextInput, TouchableHighlight, TouchableOpacity
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import products from '../requisites/products';
 
-import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity ,View, FlatList, TextInput} from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+const HomeScreen = ({navigation}) => {
 
-
-
-export default function HomeScreen(){
-    const [stocks, setStocks] = useState(0)
-
-    async function getItems() {
-      fetch(
-        'https://fakestoreapi.com/products/'
-      )
-      .then(res => res.json())
-      .then(json => {
-      setStocks(json);
-      console.log(json);
-    })
-      .catch((e) => {
-        console.log(e);
-      })
-    }
-
-    const DATA = [
-      [
-        stocks[0].image,
-        stocks[0].title,
-        stocks[0].price],
-      [
-        stocks[1].image,
-        stocks[1].title,
-        stocks[1].price],
-      [
-        stocks[2].image,
-        stocks[2].title,
-        stocks[2].price],
-      [
-        stocks[3].image,
-        stocks[3].title,
-        stocks[3].price
-      ],
-      [
-        stocks[4].image,
-        stocks[4].title,
-        stocks[4].price
-      ]
-
-    ]
-
-    useEffect(() => {
-      getItems();
-    }, []);
-
-    return(
-      <View style={styles.container}>
+  const Card = ({products}) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('Details', products)}>
+          
         <View style={{
-          flexDirection: 'row',
-          backgroundColor: '#fff',
-          justifyContent: 'space-between'
-        }}>
+           height: 225,
+           backgroundColor: '#dbdad5',
+           width: 150,
+           marginHorizontal: 2,
+           borderRadius: 10,
+           marginBottom: 20,
+           marginLeft: 15,
+           marginRight: 15,
+           padding: 19,
+           alignContent: 'center'
+          }}>
 
-          <TextInput 
-            style = {{
-              borderRadius: 8, fontSize: 15, marginBottom: 20, 
-              width: 200, textAlign: 'justify', backgroundColor: '#e6e4e1',
-              padding: 6, marginTop: 7, marginLeft: 8}}
-            placeholder = "Enter search here "
-          />
+          <View>
+            <Image
+              source={{uri: products.image}}
+              style={{height: 100, width: 120, borderRadius: 12}}
+            />
+          </View>
 
-          <View style={{
-            marginBottom: 20, borderRadius: 8, alignSelf: 'center',
-            padding: 5, marginTop: 3, marginRight: 5}}>
-            <FontAwesome.Button name='bell' size={24} color='grey' backgroundColor='#e6e4e1' onPress={() => alert('nothing')}>
-            </FontAwesome.Button>
+          <View>
+          <Text style={{fontWeight: 'bold', fontSize: 10, marginTop: 10}}>
+            {products.title}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 5,
+            }}>
+            <Text style={{fontSize: 19, fontWeight: 'bold'}}>
+              GHC {products.price}
+            </Text>
+          </View> 
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <SafeAreaView
+      style={{flex: 1, paddingHorizontal: 20, backgroundColor: '#ffffff'}}> 
+     
+      <View style={style.header}> 
+       <Icon name="arrow-back" size={28} onPress={() => navigation.goBack()} style={{marginTop: 10}}/>
+
+        <View style={{marginBottom: 20, flexDirection: 'row'}}>
+          <View style={style.searchContainer}>
+            <Icon name="search" size={25} style={{marginLeft: 20}} />
+            <TextInput placeholder="Search" style={style.input} />
           </View>
         </View>
-            
-        <View style={{
-          flex: 0.19, backgroundColor: '#ffa18a', borderRadius: 10, alignItems: 'center', 
-          justifyContent: 'center', marginLeft: 6, marginRight: 6}}>
-          <Text> Second view </Text>
-        </View>
-
-        <View style={{
-          flex: 0.77, marginTop: 30, backgroundColor: '#ffa18a', 
-          alignItems: 'flex-start', justifyContent: 'flex-start',
-          marginLeft: 6, marginRight: 6, borderRadius: 8 }}>
-          <FlatList
-            data = {DATA}
-            renderItem = {({item}) =>
-              <View style={{
-                padding: 15, height: 220, width: 150,
-                backgroundColor: '#fff', marginBottom: 10, marginTop: 5, 
-                borderRadius: 8, marginLeft: 13, marginRight: 10
-                }}>
-                <Text> {item} </Text>
-              </View>
-            }
-            horizontal={false}
-            numColumns={2}
-          />
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={{marginTop: 10}}>
+          <Icon name="shopping-cart" size={30} />
+        </TouchableOpacity>   
       </View>
-    );
-  }
+    
+      <View>
+      <FlatList
+          contentContainerStyle={{
+            marginTop: 10
+          }}
+        numColumns={2}
+        data={products}
+        renderItem={({item}) => {
+          return <Card products={item}/>;
+        }}
+      />
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const style = StyleSheet.create({
+  categoryContainer: {
+    flexDirection: 'row',
+    marginTop: 30,
+    marginBottom: 20,
+    justifyContent: 'space-between',
+  },
+  categoryText: {fontSize: 16, color: 'grey', fontWeight: 'bold'},
+  categoryTextSelected: {
+    color: '#ffffff'.green,
+    paddingBottom: 5,
+    borderBottomWidth: 2,
+    borderColor: '#ffffff',
+  },
+  card: {
+    height: 225,
+    backgroundColor: '#ffffff',
+    width: 150,
+    marginHorizontal: 2,
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 15,
+  },
+  header: {
+    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  searchContainer: {
+    height: 50,
+    backgroundColor: '#dbdad5',
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  input: {
+    height: 50,
+    fontSize: 18,
+    fontWeight: 'bold',
+    flex: 1,
+    color: '#888888',
+  },
+  sortBtn: {
+    marginLeft: 10,
+    height: 50,
+    width: 50,
+    borderRadius: 10,
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+export default HomeScreen;
