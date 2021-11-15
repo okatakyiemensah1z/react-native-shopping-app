@@ -6,7 +6,6 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  Dimensions,
   TextInput, TouchableHighlight, TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -52,7 +51,7 @@ const HomeScreen = ({navigation}) => {
               marginTop: 5,
             }}>
             <Text style={{fontSize: 19, fontWeight: 'bold'}}>
-              GHC {products.price}
+              GHS {products.price}
             </Text>
           </View> 
         </View>

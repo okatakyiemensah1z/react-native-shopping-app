@@ -48,7 +48,11 @@ export default function ProductDetails({navigation, route}){
                     <Text> {products.title} </Text>
                 </Text>
 
-                <View style={{borderRadius: 15, borderWidth: 0.6, padding: 10, marginTop: 35}}>
+                <View style={{marginTop: 20}}> 
+                    <Text style={{textAlign: 'center', fontWeight: '500'}}> {products.description} </Text>
+                </View>
+
+                <View style={{borderRadius: 15, borderWidth: 0.6, padding: 10, marginTop: 25}}>
                     <TouchableOpacity> 
                         <Text> Add to Cart </Text>
                     </TouchableOpacity>
