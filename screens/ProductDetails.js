@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -9,8 +9,8 @@ export default function ProductDetails({navigation, route}){
     const products = route.params;
 
     return(
-
-        <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
+        // <ImageBackground source={require('../assets/bgImage1.jpg')} resizeMode='cover' imageStyle={{flex: 1}}>
+        <View style={{flex: 1}}>
             <View style={{
                 paddingHorizontal: 20,
                 marginTop: 20,
@@ -59,7 +59,8 @@ export default function ProductDetails({navigation, route}){
                 </View>
             </View>
 
-           
-        </SafeAreaView>
-    );
+        </View>
+            
+        // </ImageBackground>
+            );
 }

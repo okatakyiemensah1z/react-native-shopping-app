@@ -6,7 +6,7 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  TextInput, TouchableHighlight, TouchableOpacity
+  TextInput, TouchableHighlight, TouchableOpacity, ImageBackground
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import products from '../requisites/products';
@@ -60,8 +60,12 @@ const HomeScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView
-      style={{flex: 1, paddingHorizontal: 20, backgroundColor: '#ffffff'}}> 
+    <ImageBackground source={require('../assets/bgImage1.jpg')} resizeMode='cover'>
+    <View
+      style={{flex: 1, paddingHorizontal: 20}}> 
+      <View style={{alignItems: 'center', marginTop: 20}}> 
+        <Text style={{fontWeight: 'bold', fontStyle: 'italic', fontSize: 20, fontFamily: 'serif'}}> Mensah Stores </Text>
+      </View>
      
       <View style={style.header}> 
        <Icon name="arrow-back" size={28} onPress={() => navigation.goBack()} style={{marginTop: 10}}/>
@@ -82,6 +86,7 @@ const HomeScreen = ({navigation}) => {
           contentContainerStyle={{
             marginTop: 10
           }}
+          initialNumToRender={4}
         numColumns={2}
         data={products}
         renderItem={({item}) => {
@@ -89,7 +94,8 @@ const HomeScreen = ({navigation}) => {
         }}
       />
       </View>
-    </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 };
 
